@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 
@@ -19,7 +20,14 @@ export default function HakkimdaPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Profile Image */}
             <div className="flex justify-center">
-              <img src="/media/pics/zeynep.jpg" alt="Zeynep İdil" className="w-80 h-80 object-cover rounded-full border border-[--line] shadow-[0_10px_30px_-12px_rgba(0,0,0,0.25)]" />
+              <div className="relative w-80 h-80">
+                <Image
+                  src="/media/pics/zeynep.jpg"
+                  alt="Zeynep İdil"
+                  fill
+                  className="object-cover rounded-full border border-[--line] shadow-[0_10px_30px_-12px_rgba(0,0,0,0.25)]"
+                />
+              </div>
             </div>
 
             {/* About Text */}
@@ -31,7 +39,7 @@ export default function HakkimdaPage() {
                   insanların iç dünyalarını anlamak, onlara yardımcı olmak benim için bir tutkuya dönüştü.
                 </p>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  "İçe Bakış" markasını, edindiğim bilgileri ve deneyimleri daha geniş kitlelerle paylaşmak, 
+                  &quot;İçe Bakış&quot; markasını, edindiğim bilgileri ve deneyimleri daha geniş kitlelerle paylaşmak, 
                   insanların kendilerini daha iyi anlamalarına yardımcı olmak amacıyla kurdum.
                 </p>
               </div>

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Lora, Inter } from "next/font/google";
 import "./globals.css";
 
@@ -14,7 +13,7 @@ const fontSans = Inter({
   display: "swap",
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: {
     template: "%s | İçe Bakış",
     default: "İçe Bakış – Psikoloji & İyilik Hali Yazıları",
@@ -35,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "İçe Bakış",
     url: "https://icebakis.com",
   },
-};
+} as const;
 
 export default function RootLayout({
   children,

@@ -2,7 +2,6 @@
 
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { InstagramEmbed } from "@/components/InstagramEmbed";
 import PostCard, { PostMedia } from "@/components/PostCard";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -47,13 +46,12 @@ export default function PostsPage() {
 
           <div className="max-w-5xl mx-auto space-y-16">
             {posts.map((p, i) => (
-              p.media ? (
-                <PostCard key={p.url} media={p.media as PostMedia} caption={p.caption} align={i % 2 === 0 ? "left" : "right"} />
-              ) : (
-                <div key={p.url} className="card p-6 md:p-8 rounded-2xl">
-                  <InstagramEmbed url={p.url} caption={p.caption} align={i % 2 === 0 ? "left" : "right"} />
-                </div>
-              )
+              <PostCard 
+                key={p.url} 
+                media={p.media as PostMedia} 
+                caption={p.caption} 
+                align={i % 2 === 0 ? "left" : "right"} 
+              />
             ))}
 
             {/* Infinite-like loader sentinel */}

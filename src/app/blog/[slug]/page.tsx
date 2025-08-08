@@ -57,7 +57,7 @@ function mdToHtml(md: string): string {
     if (line.startsWith('> ')) { flushP(pbuf); if (inList) { out.push('</ul>'); inList = false; } out.push(`<blockquote>${esc(line.slice(2))}</blockquote>`); continue; }
     if (line.startsWith('- ')) { flushP(pbuf); if (!inList) { out.push('<ul>'); inList = true; } out.push(`<li>${esc(line.slice(2))}</li>`); continue; }
     // emphasis: *italic* and **bold**
-    let html = esc(line)
+    const html = esc(line)
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.+?)\*/g, '<em>$1</em>');
     pbuf.push(html);
@@ -77,14 +77,14 @@ function stripMd(md: string): string {
     .trim();
 }
 
-interface BlogPostPageProps {
-  params: {
-    slug: string;
-  };
-}
-
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = blogPosts[params.slug as keyof typeof blogPosts];
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  // Fallback to string indexing if needed at runtime (should be direct in app router)
+  const post = blogPosts[slug as keyof typeof blogPosts];
 
   if (!post) {
     notFound();
@@ -103,7 +103,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            Blog'a Dön
+            Blog&apos;a Dön
           </Link>
 
           {/* Article Header */}
@@ -121,7 +121,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 <span className="text-sm text-[--text-faint]">{post.date}</span>
             </div>
               <h1 className="font-serif text-[clamp(2rem,4vw,2.6rem)] leading-tight mb-2 text-[--text]">{post.title}</h1>
-              <div className="text-sm text-[--text-muted] pb-2">Zeynep İdil • {post.date}</div>
+                              <p className="text-sm text-[--text-muted] pb-2">Zeynep İdil &bull; {post.date}</p>
             </div>
           </div>
 
@@ -135,7 +135,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             <h3 className="font-serif text-2xl mb-6 text-[--text]">İlgili Yazılar</h3>
             <div className="grid md:grid-cols-2 gap-6">
               {Object.entries(blogPosts)
-                .filter(([slug]) => slug !== params.slug)
+                .filter(([k]) => k !== slug)
                 .slice(0, 2)
                 .map(([slug, p]) => (
                   <Link key={slug} href={`/blog/${slug}`} className="card p-6 rounded-2xl hover:shadow-lg transition-shadow">
